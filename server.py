@@ -3,9 +3,11 @@ from flask import Flask, request
 import json
 from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
+import datetime
 
 from bench import Bench
-from constants import Constants
+from log import Log
+from constants import Constants, Apis
 
 # tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dist')
 # static_folder = "dist"
@@ -23,7 +25,7 @@ def hello():
 
 @app.route("/ar/init-files", methods=['POST'])
 def ar_init_files():
-    print(ar_init_files.__name__)
+    Apis.log.log(ar_init_files.__name__)
     bench.init_files()
     return json.dumps({
         "status": Constants.RESULT_OK,
@@ -33,7 +35,7 @@ def ar_init_files():
 
 @app.route("/ar/calibration-data-array", methods=['POST'])
 def ar_calibration_data_array():
-    print(ar_calibration_data_array.__name__)
+    Apis.log.log(ar_calibration_data_array.__name__)
     json_data = request.json
     bench.write_array(json_data)
     return json.dumps({
@@ -45,5 +47,8 @@ def ar_calibration_data_array():
 if __name__ == '__main__':
     port = 8101
     print("server starting on port: ", port)
+
+    Apis.log = Log()
+
     server = pywsgi.WSGIServer(('0.0.0.0', port), app, handler_class=WebSocketHandler)
     server.serve_forever()
