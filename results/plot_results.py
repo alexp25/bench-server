@@ -315,10 +315,10 @@ def plot_trajectory(x, y, label):
     plt.plot(x, y, label=label)
 
 def plot_trajectory_experiment():
-    plot_trajectory(absolute_trajectory[0], absolute_trajectory[1], "absolute")
+    # plot_trajectory(absolute_trajectory[0], absolute_trajectory[1], "absolute")
     # plot_trajectory(recon[2], recon[3], "calibrated heading")
-    # plot_trajectory(wp_x, wp_y, "calibrated heading from app")
-    plot_trajectory(recon1[2], recon1[3], "compass heading")
+    plot_trajectory(wp_x, wp_y, "calibrated heading from app")
+    # plot_trajectory(recon1[2], recon1[3], "compass heading")
     plot_trajectory(recon2[2], recon2[3], "gyro heading")
 
     plt.legend()
@@ -330,8 +330,8 @@ def plot_trajectory_experiment_1(plot_lng):
     plt.plot(time_axis, absolute_trajectory[1 if plot_lng else 0], label="absolute")
     plt.plot(time_axis, wp_y if plot_lng else wp_x, label="calibrated heading from app")
     # plt.plot(time_axis, recon[3 if plot_lng else 2], label="calibrated heading")
-    # plt.plot(time_axis, recon1[3 if plot_lng else 2], label="compass heading")
-    # plt.plot(time_axis, recon2[3 if plot_lng else 2], label="gyro heading")
+    plt.plot(time_axis, recon1[3 if plot_lng else 2], label="compass heading")
+    plt.plot(time_axis, recon2[3 if plot_lng else 2], label="gyro heading")
     # plt.plot(x, wp_lng, label="absolute")
     # plt.plot(x, recon[2], label="sensor")
     plt.legend()
